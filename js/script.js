@@ -2,49 +2,60 @@
 Treehouse Techdegree:
 FSJS project 2 - List Filter and Pagination
 ******************************************/
-   
-// Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
+const students = document.getElementsByClassName('student-item');
+const pageSize = 10;
+const pageNumber = 1;
 
 
-/*** 
-   Add your global variables that store the DOM elements you will 
-   need to reference and/or manipulate. 
-   
-   But be mindful of which variables should be global and which 
-   should be locally scoped to one of the two main functions you're 
-   going to create. A good general rule of thumb is if the variable 
-   will only be used inside of a function, then it can be locally 
-   scoped to that function.
-***/
+//without javascript enabled all students people will show up on the page
+//with javascript 10 people at a time will show up
+// need to display those 10 people depending on what page number is entered into showPage function
+const showPage = (list, page) => {
+   const startIndex = (page * pageSize) - pageSize;
+   const endIndex = (page * pageSize);
 
 
+ for(let i = 0; i < list.length; i++) {
+   if (i >= startIndex && i < endIndex) {
+      list[i].style.display = 'block';
+   } else {
+      list[i].style.display = 'none';
+   }
+ }
+}
 
 
-/*** 
-   Create the `showPage` function to hide all of the items in the 
-   list except for the ten you want to show.
+const appendPageLinks = list => {
+   const page = document.querySelector('div.page');
+   const totalLinks = Math.ceil(list.length / pageSize);
+   const divElement = document.createElement('div');
+   const ulElement = document.createElement('ul');
+   divElement.className = 'pagination';
+   divElement.appendChild(ulElement);
 
-   Pro Tips: 
-     - Keep in mind that with a list of 54 students, the last page 
-       will only display four.
-     - Remember that the first student has an index of 0.
-     - Remember that a function `parameter` goes in the parens when 
-       you initially define the function, and it acts as a variable 
-       or a placeholder to represent the actual function `argument` 
-       that will be passed into the parens later when you call or 
-       "invoke" the function 
-***/
+   for (let i = 1; i <= totalLinks; i++) {
+      const liElement = document.createElement('li');
+      const linkElement = document.createElement('a');
+      linkElement.addEventListener('click', (e) => {
 
+         // remove active class from any a element
+         for (let j = 0; j < totalLinks; j++) {
+            const links = document.querySelectorAll('a');
+            links[j].className = '';
+         }
 
+         e.target.className = 'active';
+         showPage(list, i);
+      });
+      linkElement.href = '#';
+      linkElement.textContent = (i);
+      liElement.appendChild(linkElement);
+      ulElement.appendChild(liElement);
+   }
 
+   ulElement.firstElementChild.firstElementChild.className = 'active';
+   page.appendChild(divElement);
+}
 
-/*** 
-   Create the `appendPageLinks function` to generate, append, and add 
-   functionality to the pagination buttons.
-***/
-
-
-
-
-
-// Remember to delete the comments that came with this file, and replace them with your own code comments.
+showPage(students, 1);
+appendPageLinks(students);
