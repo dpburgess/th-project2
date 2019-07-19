@@ -65,3 +65,82 @@ const appendPageLinks = list => {
 
 showPage(students, defaultPageNumber);
 appendPageLinks(students);
+
+window.addEventListener('DOMContentLoaded', (event) => {
+   addSearch();
+});
+
+const addSearch = () => {
+   const pageHeader = document.querySelector('.page-header');
+   const searchDiv = document.createElement('div');
+   const searchInput = document.createElement('input');
+   const searchButton = document.createElement('button');
+   searchDiv.className = 'student-search';
+   searchButton.textContent = 'Search';
+   searchInput.placeholder = 'Search for students...';
+   searchDiv.appendChild(searchInput);
+   searchDiv.appendChild(searchButton);
+   pageHeader.appendChild(searchDiv);
+
+   // need the number of pages in the pagination to match how many people match the search results
+
+   const searchButton1 = document.getElementsByTagName('button')[0];
+   searchButton1.addEventListener('click', (e) => {
+      const contents = document.getElementsByTagName('input')[0].value;
+      searchFeature(students, contents);
+   });
+
+   searchInput.addEventListener('keyup', (e) => {
+      const contents = document.getElementsByTagName('input')[0].value;
+      searchFeature(students, contents);
+   });
+}
+
+const searchFeature = (list, contents) => {
+   const pageParent = document.querySelector('div.page');
+   const pagination = document.querySelector('.pagination');
+   const results = [];
+   for (let i = 0; i < list.length; i++) {
+      if (list[i].firstElementChild.firstElementChild.nextElementSibling.textContent.includes(contents)) {
+         results.push(list[i]);
+         list[i].style.display = 'block';
+      } else {
+         list[i].style.display = 'none';
+      }
+   }
+
+   if (results.length > 0) {
+      const emptyResultsMsg = document.querySelector('.empty');
+      if (emptyResultsMsg) {
+         pageParent.removeChild(emptyResultsMsg)
+      }
+
+      if (pagination) {
+         pageParent.removeChild(pagination);
+      }
+      showPage(results, 1);
+      appendPageLinks(results);
+   } else {
+      noResults();
+   }
+}
+
+const noResults = () => {
+   const pageParent = document.querySelector('div.page');
+   const pagination = document.querySelector('.pagination');
+   const studentListParent = document.querySelector('.student-list');
+   const empty = document.querySelector('.empty');
+   if (pagination) {
+      pageParent.removeChild(pagination);
+   }
+
+   if (!empty) {
+      const message = 'There were not any matches.  Please try again.'
+      const container = document.createElement('div');
+      const messageH3 = document.createElement('h3');
+      container.className = 'empty';
+      messageH3.textContent = message;
+      container.appendChild(messageH3);
+      pageParent.insertBefore(container, studentListParent);
+   }
+}
