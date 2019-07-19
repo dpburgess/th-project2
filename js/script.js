@@ -86,12 +86,12 @@ const addSearch = () => {
 
    const searchButton1 = document.getElementsByTagName('button')[0];
    searchButton1.addEventListener('click', (e) => {
-      const contents = document.getElementsByTagName('input')[0].value.toLowerCase;
+      const contents = document.getElementsByTagName('input')[0].value.toLowerCase();
       searchFeature(students, contents);
    });
 
    searchInput.addEventListener('keyup', (e) => {
-      const contents = document.getElementsByTagName('input')[0].value.toLowerCase;
+      const contents = document.getElementsByTagName('input')[0].value.toLowerCase();
       searchFeature(students, contents);
    });
 }
@@ -101,7 +101,7 @@ const searchFeature = (list, contents) => {
    const pagination = document.querySelector('.pagination');
    const results = [];
    for (let i = 0; i < list.length; i++) {
-      if (list[i].firstElementChild.firstElementChild.nextElementSibling.textContent.includes(contents)) {
+      if (list[i].firstElementChild.firstElementChild.nextElementSibling.textContent.toLowerCase().includes(contents)) {
          results.push(list[i]);
          list[i].style.display = 'block';
       } else {
