@@ -86,12 +86,12 @@ const addSearch = () => {
 
    const searchButton1 = document.getElementsByTagName('button')[0];
    searchButton1.addEventListener('click', (e) => {
-      const contents = document.getElementsByTagName('input')[0].value;
+      const contents = document.getElementsByTagName('input')[0].value.toLowerCase;
       searchFeature(students, contents);
    });
 
    searchInput.addEventListener('keyup', (e) => {
-      const contents = document.getElementsByTagName('input')[0].value;
+      const contents = document.getElementsByTagName('input')[0].value.toLowerCase;
       searchFeature(students, contents);
    });
 }
