@@ -63,13 +63,16 @@ const appendPageLinks = list => {
    page.appendChild(divElement);
 }
 
+// start the app here with a call to the two methods
 showPage(students, defaultPageNumber);
 appendPageLinks(students);
 
+// appends the search bar to the page when the page is loaded
 window.addEventListener('DOMContentLoaded', (event) => {
    addSearch();
 });
 
+// creating the search bar
 const addSearch = () => {
    const pageHeader = document.querySelector('.page-header');
    const searchDiv = document.createElement('div');
@@ -82,8 +85,8 @@ const addSearch = () => {
    searchDiv.appendChild(searchButton);
    pageHeader.appendChild(searchDiv);
 
-   // need the number of pages in the pagination to match how many people match the search results
 
+   // adding a click event handler to the search bar and a keyup event handler
    const searchButton1 = document.getElementsByTagName('button')[0];
    searchButton1.addEventListener('click', (e) => {
       const contents = document.getElementsByTagName('input')[0].value.toLowerCase();
@@ -96,6 +99,7 @@ const addSearch = () => {
    });
 }
 
+// the actual work of searching if the input value is found in the list of students
 const searchFeature = (list, contents) => {
    const pageParent = document.querySelector('div.page');
    const pagination = document.querySelector('.pagination');
@@ -125,6 +129,7 @@ const searchFeature = (list, contents) => {
    }
 }
 
+// when no results are found display a message
 const noResults = () => {
    const pageParent = document.querySelector('div.page');
    const pagination = document.querySelector('.pagination');
