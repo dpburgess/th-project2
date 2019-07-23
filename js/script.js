@@ -63,12 +63,11 @@ const appendPageLinks = list => {
    page.appendChild(divElement);
 }
 
-// start the app here with a call to the two methods
-showPage(students, defaultPageNumber);
-appendPageLinks(students);
-
+// start the app here
 // appends the search bar to the page when the page is loaded
 window.addEventListener('DOMContentLoaded', (event) => {
+   showPage(students, defaultPageNumber);
+   appendPageLinks(students);
    addSearch();
 });
 
